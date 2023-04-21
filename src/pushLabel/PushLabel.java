@@ -8,6 +8,11 @@ public class PushLabel extends MaxFlowSolution{
     int[] excess;
     int[] seen;
     Stack<Integer> stack;
+
+    public PushLabel(){
+        super("Push-label algorithm");
+    }
+
     @Override
     public int getMaxFlow(int start, int end) {
         //initial of map
@@ -30,13 +35,7 @@ public class PushLabel extends MaxFlowSolution{
         return result();
     }
 
-    private int result(){
-        int sum = 0;
-        for(int i=0;i<n;i++){
-            sum += map[i][0];
-        }
-        return sum;
-    }
+
 
     private void push(int start, int end){
         int value = Math.min(map[start][end], excess[start]);
