@@ -2,34 +2,19 @@ package pushLabel;
 
 import java.util.*;
 
-public class PushLabel implements MaxFlowSolution{
+public class PushLabel extends MaxFlowSolution{
 
-    int[][] original;
-    int[][] map;
-    int n;
     int[] height;
     int[] excess;
     int[] seen;
-
     Stack<Integer> stack;
-
-
     @Override
-    public int getMaxFlow(int start, int end, MaxFlow maxFlow) {
-        original = maxFlow.getMatrix();
-        //init residual network
-        map = maxFlow.getMatrix();
-        long time = System.nanoTime();
-        n = map.length;
+    public int getMaxFlow(int start, int end) {
         //initial of map
         height = new int[n];
         excess = new int[n];
         seen = new int[n];
         stack = new Stack<>();
-//        for(int i=0;i<n;i++){
-//            if(i == start || i == end) continue;
-//            stack.add(i);
-//        }
         // initial push
         height[start] = n;
         excess[start] = Integer.MAX_VALUE;
@@ -42,11 +27,7 @@ public class PushLabel implements MaxFlowSolution{
             if(height[node] >= n) continue;
             discharge(node);
         }
-
-        int result = result();
-        long endTime = System.nanoTime();
-        System.out.println(endTime-time);
-        return result;
+        return result();
     }
 
     private int result(){
