@@ -74,10 +74,22 @@ class MaxFlowTest {
     }
 
     @Test
+    @DisplayName("middle map")
+    void maxFlow03(){
+        int level = 2, nodes = 10, range = 10;
+        RandomCreator creator = new RandomCreator(0);
+        MaxFlow maxFlow = creator.generateMap(level,nodes,range);
+
+        assertEquals(51,maxFlow.maxFlow(0,level*nodes+1, new FordForkerson()));
+        assertEquals(51, maxFlow.maxFlow(0,level*nodes+1, new PushLabel()));
+
+    }
+
+    @Test
     @DisplayName("big map")
     void maxFlow(){
         RandomCreator creator = new RandomCreator(0);
-        MaxFlow maxFlow = creator.generateMap(10,10,100);
+        MaxFlow maxFlow = creator.generateMap(100,100,1000);
         assertEquals(49494,maxFlow.maxFlow(0,10000+1, new FordForkerson()));
         assertEquals(49494,maxFlow.maxFlow(0,10000+1, new PushLabel()));
     }

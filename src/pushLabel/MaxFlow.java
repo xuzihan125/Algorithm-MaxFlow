@@ -21,6 +21,10 @@ public class MaxFlow {
         match.put(name,num);
     }
 
+    public void removeEdge(int from, int end){
+        map.get(from).remove(end);
+    }
+
     public void addEdge(String source, String target, int value){
         addEdge(match.get(source),target,value);
     }

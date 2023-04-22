@@ -29,7 +29,7 @@ public class PushLabel extends MaxFlowSolution{
 
         while (!stack.isEmpty()){
             int node = stack.pop();
-            if(height[node] >= n) continue;
+            if(node == end || node == start) continue;
             discharge(node);
         }
         return result();
@@ -42,7 +42,7 @@ public class PushLabel extends MaxFlowSolution{
         if(value == 0){
             return;
         }
-        stack.push(start);
+        stack.push(end);
         map[start][end] -= value;
         map[end][start] += value;
         excess[start] -= value;
@@ -52,18 +52,18 @@ public class PushLabel extends MaxFlowSolution{
     private void relabel(int node){
         int min = Integer.MAX_VALUE;
         for(int i=0;i<n;i++){
-            if(original[node][i] - map[i][node] > 0){
+            if(map[node][i] > 0){
                 min = Math.min(min, height[i]);
             }
         }
-        height[node] = min;
+        height[node] = min+1;
     }
 
     private void discharge(int node){
         while(excess[node] > 0){
             if(seen[node] < n){
                 int next = seen[node];
-                if(original[node][next] - map[node][next] > 0 && height[node] > height[next]){
+                if(map[node][next] > 0 && height[node] > height[next]){
                     push(node,next);
                 }
                 else{

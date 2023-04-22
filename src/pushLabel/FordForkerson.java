@@ -29,24 +29,26 @@ public class FordForkerson extends MaxFlowSolution{
     private int findPathDFS(int start, int end){
         path = new LinkedList<>();
         reached = new HashSet<>();
+        reached.add(start);
         return findPathDFS(start, end, Integer.MAX_VALUE);
     }
 
     private int findPathDFS(int start, int end, int min){
-        reached.add(start);
         if(start == end) return min==Integer.MAX_VALUE ? 0 : min ;
         for(int i=0;i<n;i++){
             if(map[start][i]==0 || reached.contains(i)){
                 continue;
             }
             path.add(new int[]{start,i});
+            reached.add(i);
             int result = findPathDFS(i,end,Math.min(min,Math.min(min, map[start][i])));
             if(result != -1){
                 return result;
             }
-            reached.remove(i);
             path.remove(path.size()-1);
+            reached.remove(i);
         }
+
         return -1;
     }
 }
