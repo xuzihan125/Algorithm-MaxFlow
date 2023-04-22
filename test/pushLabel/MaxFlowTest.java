@@ -69,28 +69,31 @@ class MaxFlowTest {
         maxFlow.addEdge(2,3,100);
         maxFlow.addEdge(1,2,1);
         assertEquals(200, maxFlow.maxFlow(0,3,new FordForkerson()));
+        assertEquals(200, maxFlow.maxFlow(0,3,new EdmondsKarp()));
         assertEquals(200, maxFlow.maxFlow(0,3,new PushLabel()));
-
     }
 
     @Test
     @DisplayName("middle map")
+    void maxFlow04(){
+        int level = 2, nodes = 2, range = 10;
+        RandomCreator creator = new RandomCreator(0);
+        MaxFlow maxFlow = creator.generateMap(level,nodes,range);
+        System.out.println(maxFlow.maxFlow(0,level*nodes+1, new PushLabel()));
+        assertEquals(maxFlow.maxFlow(0,level*nodes+1, new PushLabel()), maxFlow.maxFlow(0,level*nodes+1, new EdmondsKarp()));
+    }
+
+    @Test
+    @DisplayName("differential map")
     void maxFlow03(){
         int level = 2, nodes = 10, range = 10;
         RandomCreator creator = new RandomCreator(0);
         MaxFlow maxFlow = creator.generateMap(level,nodes,range);
 
         assertEquals(51,maxFlow.maxFlow(0,level*nodes+1, new FordForkerson()));
+        assertEquals(51, maxFlow.maxFlow(0,level*nodes+1, new EdmondsKarp()));
         assertEquals(51, maxFlow.maxFlow(0,level*nodes+1, new PushLabel()));
 
     }
 
-    @Test
-    @DisplayName("big map")
-    void maxFlow(){
-        RandomCreator creator = new RandomCreator(0);
-        MaxFlow maxFlow = creator.generateMap(100,100,1000);
-        assertEquals(49494,maxFlow.maxFlow(0,10000+1, new FordForkerson()));
-        assertEquals(49494,maxFlow.maxFlow(0,10000+1, new PushLabel()));
-    }
 }

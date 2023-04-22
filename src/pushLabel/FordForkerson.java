@@ -11,7 +11,6 @@ public class FordForkerson extends MaxFlowSolution{
 
     public FordForkerson(){
         super("Ford-forkerson algorithm");
-        path = new LinkedList<>();
     }
     @Override
     int getMaxFlow(int start, int end) {
